@@ -1,56 +1,31 @@
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to right, #1e3c72, #2a5298);
-  font-family: Arial, sans-serif;
-  color: #fff;
-}
+document.getElementById('sendBtn').addEventListener('click', () => {
+  const feedback = document.getElementById('feedbackText').value.trim();
+  const username = document.getElementById('username').value.trim();
 
-.container {
-  background-color: #1f1f1f;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  text-align: center;
-  width: 90%;
-  max-width: 500px;
-}
+  if (!feedback) {
+    alert('Please write some feedback before sending.');
+    return;
+  }
+  if (!username) {
+    alert('Please enter your Discord ID for ping.');
+    return;
+  }
 
-.logo {
-  width: 100px;
-  margin-bottom: 15px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-button {
-  padding: 12px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #28a745;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background-color: #218838;
-}
-
-.tiny {
-  font-size: 10px;
-  color: #ccc;
-  margin-top: 20px;
-    }
+  fetch('/api/feedback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ feedback, username })
+  })
+    .then(res => {
+      if (res.ok) {
+        alert('Thank you! Your feedback has been sent.');
+        document.getElementById('feedbackText').value = '';
+      } else {
+        alert('Failed to send feedback.');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error sending feedback.');
+    });
+});
