@@ -1,30 +1,56 @@
-document.getElementById("sendBtn").addEventListener("click", function () {
-  const feedback = document.getElementById("feedbackText").value.trim();
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
 
-  if (!feedback) {
-    alert("Please write some feedback before submitting.");
-    return;
-  }
+.container {
+  background-color: #1f1f1f;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+}
 
-  fetch("https://discord.com/api/webhooks/1362275778682818690/iE04DIwklUddKS9IpiFhUnBObT1uuW0tw4uebATvY-uKAS0gbqj2ruoFywuDcG9fmNyr", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      content: `**New Feedback:**\n${feedback}`
-    })
-  })
-    .then(response => {
-      if (response.ok) {
-        alert("Feedback sent successfully!");
-        document.getElementById("feedbackText").value = "";
-      } else {
-        alert("Failed to send feedback.");
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("Error sending feedback.");
-    });
-});
+.logo {
+  width: 100px;
+  margin-bottom: 15px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.tiny {
+  font-size: 10px;
+  color: #ccc;
+  margin-top: 20px;
+    }
